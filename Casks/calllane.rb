@@ -1,6 +1,6 @@
 cask "calllane" do
-  version "0.2.0"
-  sha256 "c4633656441baa13ec5bb096af938471cbebc41eb79cd12c407752b2856e280d"
+  version "0.3.0"
+  sha256 "55cb1dc328722c79c85f2ab02a1b089ad23ab35d1a44ed04d4110195999b075b"
 
   url "https://github.com/rav4nn/calllane/releases/download/v#{version}/CallLane.zip"
   name "CallLane"
@@ -14,13 +14,16 @@ cask "calllane" do
 
   # Homebrew runs `script` before `pkgutil`, so the script removes the bundle and restarts
   # the audio daemon itself; pkgutil then forgets the receipt.
-  uninstall quit:    "dev.rav4nn.calllane",
-            script:  {
+  # Homebrew quits the app (its quit handler restores the input device) before it unregisters
+  # the login item, runs `script` and forgets the pkgutil receipt.
+  uninstall quit:       "dev.rav4nn.calllane",
+            login_item: "CallLane",
+            script:     {
               executable: "/bin/sh",
               args:       ["-c", "rm -rf /Library/Audio/Plug-Ins/HAL/CallLane.driver; killall coreaudiod || true"],
               sudo:       true,
             },
-            pkgutil: "dev.rav4nn.calllane.driver"
+            pkgutil:    "dev.rav4nn.calllane.driver"
 
   zap trash: "~/Library/Preferences/dev.rav4nn.calllane.plist"
 
