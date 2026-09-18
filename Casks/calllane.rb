@@ -1,6 +1,6 @@
 cask "calllane" do
-  version "0.3.0"
-  sha256 "55cb1dc328722c79c85f2ab02a1b089ad23ab35d1a44ed04d4110195999b075b"
+  version "0.3.1"
+  sha256 "ed7ec24c1affce4c6e9b6bb8ea05b0bcc203de313e70973ecc46f4d8189c4086"
 
   url "https://github.com/rav4nn/calllane/releases/download/v#{version}/CallLane.zip"
   name "CallLane"
